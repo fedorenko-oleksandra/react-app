@@ -5,12 +5,13 @@ import CourseInfo from '../CourseInfo/CourseInfo';
 
 const Courses = (props) => {
 	const [isInfoOpen, setIsInfoOpen] = useState(false);
-	const [currentCourse, setCurrentCourse] = useState('');
+	const [currentCourse, setCurrentCourse] = useState({});
 
 	function toggleButtonClick(id) {
 		setIsInfoOpen(!isInfoOpen);
-		setCurrentCourse(id);
-		console.log(currentCourse);
+		if (id) {
+			setCurrentCourse(props.courses.find((course) => course.id === id) ?? {});
+		}
 	}
 
 	let listItems;
@@ -18,8 +19,8 @@ const Courses = (props) => {
 	if (isInfoOpen) {
 		listItems = (
 			<CourseInfo
-				course={props.courses[0]}
-				buttonEvent={toggleButtonClick}
+				course={currentCourse}
+				buttonEvent={() => toggleButtonClick()}
 			></CourseInfo>
 		);
 	} else {
@@ -27,7 +28,7 @@ const Courses = (props) => {
 			<CourseCard
 				key={course.id}
 				course={course}
-				buttonEvent={(e) => toggleButtonClick(e.target)}
+				buttonEvent={() => toggleButtonClick(course.id)}
 			></CourseCard>
 		));
 	}
