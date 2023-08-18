@@ -1,0 +1,60 @@
+@import '../../variables.scss';
+
+.card_border {
+  border: 2px solid $light-color;
+  padding: 45px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: $white-color;
+  box-shadow: $shadow;
+}
+
+.course_info {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.content {
+  margin: 0;
+
+  &_left {
+    flex-basis: 50%;
+    padding: 20px 20px 0 0;
+  }
+
+  &_right {
+    flex-basis: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px 0 0 40px;
+    border-left: 2px solid $light-color;
+  }
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: 32px;
+}
+
+.info_wrapper {
+  padding: 0;
+  margin-bottom: 25px;
+
+  li {
+    margin-bottom: 10px;
+    list-style-type: none;
+  }
+
+  li strong {
+    font-size: 20px;
+    font-weight: 700;
+    list-style: 32px;
+  }
+}
+
+.button_holder {
+  text-align: end;
+}

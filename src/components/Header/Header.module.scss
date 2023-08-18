@@ -1,0 +1,21 @@
+@import '../../variables.scss';
+
+.header {
+  width: 100%;
+  background-color: $white-color;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-bottom: 1px solid $light-color;
+  box-shadow: $shadow;
+  
+  &_wrapper {
+    width: 95%;
+    height: 80px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
