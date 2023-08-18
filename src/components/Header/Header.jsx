@@ -9,7 +9,7 @@ const Header = () => {
 	return (
 		<div className={styles.header}>
 			<div className={styles.header_wrapper}>
-				<a>
+				<a href='/'>
 					<Logo></Logo>
 				</a>
 				<Button buttonText='Login'></Button>
