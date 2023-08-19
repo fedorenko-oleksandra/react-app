@@ -1,0 +1,16 @@
+@import '../../../../variables.scss';
+
+.search_bar {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  &_bar_wrapper {
+    display: flex;
+    flex: 0 0 30%;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

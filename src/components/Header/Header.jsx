@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Logo from './components/Logo';
-import Button from '../../common/Button/Button';
+import { Button } from '../../common';
 
 import styles from './Header.module.scss';
 
