@@ -13,7 +13,7 @@ const SearchBar = (props) => {
 					inputValue={props.inputValue}
 					handleChange={props.inputEvent}
 				></Input>
-				<Button buttonText='Search'></Button>
+				<Button buttonText='Search' onClick={props.buttonEvent}></Button>
 			</div>
 			<Button buttonText='Add new course'></Button>
 		</div>

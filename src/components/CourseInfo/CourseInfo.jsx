@@ -30,7 +30,7 @@ const CourseInfo = (props) => {
 								<strong>Created: </strong>
 								{creationDate}
 							</li>
-							<li>
+							<li className={styles.word_wrap}>
 								<strong>Authors: </strong>
 								<span>{authors}</span>
 							</li>

@@ -11,7 +11,7 @@ const Courses = (props) => {
 	const [inputValue, setInputValue] = useState('');
 
 	const [currentCourse, setCurrentCourse] = useState({});
-	const [coursesList, setCoursesList] = useState([]);
+	const [coursesList, setCoursesList] = useState(courses);
 	const [searchParam] = useState(['id', 'title']);
 
 	function toggleButtonClick(id) {
@@ -23,46 +23,41 @@ const Courses = (props) => {
 
 	function handleInputChange(e) {
 		setInputValue(e.target.value);
-		const filteredCourses = courses.find((course) =>
+
+		handleButtonSearchClick();
+
+		if (e.target.value === '') {
+			setCoursesList(courses);
+		}
+	}
+
+	function handleButtonSearchClick() {
+		const filteredCourses = courses.filter((course) =>
 			searchParam.some((searchItem) =>
 				course[searchItem].toLowerCase().includes(inputValue.toLowerCase())
 			)
 		);
+
 		setCoursesList(filteredCourses);
-		console.log(coursesList);
 	}
 
-	// let listItems;
-
-	// if (isInfoOpen) {
-	// 	listItems = (
-	// 		<CourseInfo
-	// 			course={currentCourse}
-	// 			buttonEvent={() => toggleButtonClick()}
-	// 		></CourseInfo>
-	// 	);
-	// } else {
-	// 	listItems = courses.map((course) => (
-	// 		<CourseCard
-	// 			key={course.id}
-	// 			course={course}
-	// 			buttonEvent={() => toggleButtonClick(course.id)}
-	// 		></CourseCard>
-	// 	));
-	// }
 	return (
 		<ul>
-			<SearchBar
-				inputEvent={handleInputChange}
-				inputValue={inputValue}
-			></SearchBar>
+			{isInfoOpen ? null : (
+				<SearchBar
+					inputEvent={handleInputChange}
+					buttonEvent={handleButtonSearchClick}
+					inputValue={inputValue}
+				></SearchBar>
+			)}
+
 			{isInfoOpen ? (
 				<CourseInfo
 					course={currentCourse}
 					buttonEvent={() => toggleButtonClick()}
 				></CourseInfo>
 			) : (
-				courses.map((course) => (
+				coursesList.map((course) => (
 					<CourseCard
 						key={course.id}
 						course={course}
