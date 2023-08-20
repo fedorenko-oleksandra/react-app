@@ -9,8 +9,14 @@
 
   &_bar_wrapper {
     display: flex;
+    flex-wrap: nowrap;
     flex: 0 0 30%;
     justify-content: space-between;
     align-items: center;
+  }
+
+  Input {
+    width: 400px;
+    margin-right: 20px;
   }
 }

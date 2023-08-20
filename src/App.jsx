@@ -1,8 +1,13 @@
 import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import Header from './components/Header/Header';
-import Courses from './components/Courses/Courses';
-import EmptyCourseList from './components/EmptyCourseList/EmptyCourseList';
+import {
+	Header,
+	Courses,
+	EmptyCourseList,
+	Login,
+	Registration,
+} from './components';
 import { getCoursesList } from './helpers/index';
 
 import styles from './App.module.scss';
@@ -18,10 +23,19 @@ function App() {
 	}
 
 	return (
-		<div className={styles.app_wrapper}>
-			<Header></Header>
-			<div className={styles.app_container}>{courseList}</div>
-		</div>
+		<BrowserRouter>
+			<div className={styles.app_wrapper}>
+				<Header></Header>
+				<div className={styles.app_container}>
+					<Routes>
+						<Route path='courses' element={courseList} />
+						<Route path='login' element={<Login />} />
+						<Route path='registration' element={<Registration />} />
+						<Route path='*' element={<Navigate to='registration' />} />
+					</Routes>
+				</div>
+			</div>
+		</BrowserRouter>
 	);
 }
 
