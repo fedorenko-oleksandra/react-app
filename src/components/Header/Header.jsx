@@ -13,7 +13,7 @@ const Header = () => {
 				<Link to='#'>
 					<Logo></Logo>
 				</Link>
-				<Button buttonText='Login'></Button>
+				<Button buttonText='Logout'></Button>
 			</div>
 		</div>
 	);

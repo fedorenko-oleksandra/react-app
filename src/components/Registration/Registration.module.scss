@@ -20,7 +20,7 @@
       margin-bottom: 15px;
     }
 
-    .input_holder {
+    .link_holder {
       text-align: center;
     }
   }
@@ -33,7 +33,22 @@
 
     Input {
       width: 100%;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
   }
 }
+
+.input {
+  &_holder {
+    margin-bottom: 20px;
+  }
+
+  &_error {
+    border-color: $danger-color;
+  }
+}
+
+.error {
+  color: $danger-color;
+}
+

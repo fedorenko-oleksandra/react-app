@@ -9,6 +9,8 @@ const SearchBar = (props) => {
 		<div className={styles.search_bar}>
 			<div className={styles.search_bar_wrapper}>
 				<Input
+					name='search'
+					type='search'
 					placeholder='Input text'
 					inputValue={props.inputValue}
 					handleChange={props.inputEvent}

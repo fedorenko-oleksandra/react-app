@@ -5,9 +5,8 @@ import styles from './Input.module.scss';
 const Input = (props) => {
 	return (
 		<input
-			type='search'
-			name='search-form'
-			id='search-form'
+			type={props.type}
+			name={props.name}
 			className={styles.input}
 			placeholder={props.placeholder}
 			onChange={props.handleChange}
