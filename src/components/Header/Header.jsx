@@ -6,20 +6,25 @@ import { Button } from '../../common';
 
 import styles from './Header.module.scss';
 
-const Header = () => {
+const Header = (props) => {
 	function logOut() {
-		localStorage.removeItem('token');
+		localStorage.clear();
 	}
 
 	return (
 		<div className={styles.header}>
 			<div className={styles.header_wrapper}>
-				<Link to='#'>
+				<Link to='/'>
 					<Logo></Logo>
 				</Link>
-				<Link to='/login'>
-					<Button buttonText='Logout' buttonEvent={() => logOut()}></Button>
-				</Link>
+				{props.isLogin ? (
+					<div className={styles.user_wrapper}>
+						<strong>{props.name}</strong>
+						<Link to='/login'>
+							<Button buttonText='Logout' onClick={() => logOut()}></Button>
+						</Link>
+					</div>
+				) : null}
 			</div>
 		</div>
 	);

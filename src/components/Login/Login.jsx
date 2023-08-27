@@ -61,6 +61,7 @@ const Login = () => {
 
 		if (res.successful === true) {
 			localStorage.setItem('token', res.result);
+			localStorage.setItem('name', res.user.name);
 			navigate('/courses');
 		} else {
 			let errors = {};
@@ -83,8 +84,9 @@ const Login = () => {
 			<div className={styles.login_wrapper}>
 				<form className={styles.login_form} onSubmit={handleSubmit}>
 					<div className={styles.input_holder}>
-						<label htmlFor='email'>Email</label>
 						<Input
+							labelText='Email'
+							id='email'
 							type='text'
 							name='email'
 							placeholder='Email'
@@ -95,8 +97,9 @@ const Login = () => {
 					</div>
 
 					<div className={styles.input_holder}>
-						<label htmlFor='password'>Password</label>
 						<Input
+							labelText='Password'
+							id='password'
 							type='text'
 							name='password'
 							placeholder='Password'

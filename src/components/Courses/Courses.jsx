@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
+import { Button } from '../../common';
+
+import styles from './Courses.module.scss';
 
 const Courses = (props) => {
 	const { courses } = props;
@@ -39,11 +42,16 @@ const Courses = (props) => {
 
 	return (
 		<ul>
-			<SearchBar
-				inputEvent={handleInputChange}
-				buttonEvent={handleButtonSearchClick}
-				inputValue={inputValue}
-			></SearchBar>
+			<div className={styles.search_bar}>
+				<SearchBar
+					inputEvent={handleInputChange}
+					buttonEvent={handleButtonSearchClick}
+					inputValue={inputValue}
+				></SearchBar>
+				<Link to='/courses/add'>
+					<Button buttonText='Add new course'></Button>
+				</Link>
+			</div>
 
 			{coursesList.map((course) => (
 				<CourseCard

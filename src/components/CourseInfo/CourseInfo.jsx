@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getCourseById } from '../../helpers/getCourseById';
 
-import Button from '../../common/Button/Button';
+import { Button } from '../../common';
 
 import styles from './CourseInfo.module.scss';
 

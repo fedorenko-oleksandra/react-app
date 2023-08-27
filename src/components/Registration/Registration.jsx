@@ -86,11 +86,12 @@ const Registration = (props) => {
 			<div className={styles.registration_wrapper}>
 				<form className={styles.registration_form} onSubmit={handleSubmit}>
 					<div className={styles.input_holder}>
-						<label htmlFor='name'>Name</label>
 						<Input
 							type='text'
 							name='name'
+							id='name'
 							placeholder='Name'
+							labelText='Name'
 							inputValue={inputs.name}
 							className={styles.input_error}
 							handleChange={inputChange}
@@ -99,8 +100,9 @@ const Registration = (props) => {
 					</div>
 
 					<div className={styles.input_holder}>
-						<label htmlFor='email'>Email</label>
 						<Input
+							labelText='Email'
+							id='email'
 							type='text'
 							name='email'
 							placeholder='Email'
@@ -111,8 +113,9 @@ const Registration = (props) => {
 					</div>
 
 					<div className={styles.input_holder}>
-						<label htmlFor='password'>Password</label>
 						<Input
+							labelText='Password'
+							id='password'
 							type='text'
 							name='password'
 							placeholder='Password'
