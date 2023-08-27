@@ -57,12 +57,23 @@ const Login = () => {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(formValues),
 		});
-		const result = await response.json();
+		const res = await response.json();
 
-		if (result.successful === true) {
+		if (res.successful === true) {
+			localStorage.setItem('token', res.result);
 			navigate('/courses');
 		} else {
-			alert(result.errors);
+			let errors = {};
+			res.errors.forEach((error) => {
+				if (error.includes('email')) {
+					errors.email = error;
+				}
+				if (error.includes('password')) {
+					errors.password = error;
+				}
+			});
+
+			setErrors(errors);
 		}
 	};
 

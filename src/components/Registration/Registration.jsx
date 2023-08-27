@@ -63,7 +63,20 @@ const Registration = (props) => {
 		if (result.successful === true) {
 			navigate('/login');
 		} else {
-			alert(result.errors);
+			let errors = {};
+			result.errors.forEach((error) => {
+				if (error.includes('name')) {
+					errors.name = error;
+				}
+				if (error.includes('email')) {
+					errors.email = error;
+				}
+				if (error.includes('password')) {
+					errors.password = error;
+				}
+			});
+
+			setErrors(errors);
 		}
 	};
 

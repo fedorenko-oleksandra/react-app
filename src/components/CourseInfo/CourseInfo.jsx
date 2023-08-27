@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { getCourseById } from '../../helpers/getCourseById';
 
 import Button from '../../common/Button/Button';
 
 import styles from './CourseInfo.module.scss';
 
-const CourseInfo = (props) => {
-	const { id, title, description, authors, duration, creationDate } =
-		props.course;
+const CourseInfo = () => {
+	const { id } = useParams();
+
+	const [course, setCourse] = useState({});
+
+	useEffect(() => {
+		setCourse(getCourseById(id));
+	}, [id]);
 
 	return (
 		<div>
-			<h1 className={styles.title}>{title}</h1>
+			<h1 className={styles.title}>{course.title}</h1>
 			<div className={styles.card_border}>
 				<h3>Description:</h3>
 				<div className={styles.course_info}>
-					<p className={styles.content_left}>{description}</p>
+					<p className={styles.content_left}>{course.description}</p>
 
 					<div className={styles.content_right}>
 						<ul className={styles.info_wrapper}>
@@ -24,22 +31,24 @@ const CourseInfo = (props) => {
 							</li>
 							<li>
 								<strong>Duration: </strong>
-								{duration}
+								{course.duration}
 							</li>
 							<li>
 								<strong>Created: </strong>
-								{creationDate}
+								{course.creationDate}
 							</li>
 							<li className={styles.word_wrap}>
 								<strong>Authors: </strong>
-								<span>{authors}</span>
+								<span>{course.authors}</span>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div className={styles.button_holder}>
-				<Button buttonText='Back' onClick={props.buttonEvent}></Button>
+				<Link to='/courses'>
+					<Button buttonText='Back'></Button>
+				</Link>
 			</div>
 		</div>
 	);

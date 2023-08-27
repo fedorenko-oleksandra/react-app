@@ -1,24 +1,20 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import CourseCard from './components/CourseCard/CourseCard';
-import CourseInfo from '../CourseInfo/CourseInfo';
 import SearchBar from './components/SearchBar/SearchBar';
 
 const Courses = (props) => {
 	const { courses } = props;
 
-	const [isInfoOpen, setIsInfoOpen] = useState(false);
 	const [inputValue, setInputValue] = useState('');
-
-	const [currentCourse, setCurrentCourse] = useState({});
 	const [coursesList, setCoursesList] = useState(courses);
 	const [searchParam] = useState(['id', 'title']);
 
+	const navigate = useNavigate();
+
 	function toggleButtonClick(id) {
-		setIsInfoOpen(!isInfoOpen);
-		if (id) {
-			setCurrentCourse(courses.find((course) => course.id === id) ?? {});
-		}
+		navigate(`/courses/${id}`);
 	}
 
 	function handleInputChange(e) {
@@ -43,28 +39,19 @@ const Courses = (props) => {
 
 	return (
 		<ul>
-			{isInfoOpen ? null : (
-				<SearchBar
-					inputEvent={handleInputChange}
-					buttonEvent={handleButtonSearchClick}
-					inputValue={inputValue}
-				></SearchBar>
-			)}
+			<SearchBar
+				inputEvent={handleInputChange}
+				buttonEvent={handleButtonSearchClick}
+				inputValue={inputValue}
+			></SearchBar>
 
-			{isInfoOpen ? (
-				<CourseInfo
-					course={currentCourse}
-					buttonEvent={() => toggleButtonClick()}
-				></CourseInfo>
-			) : (
-				coursesList.map((course) => (
-					<CourseCard
-						key={course.id}
-						course={course}
-						buttonEvent={() => toggleButtonClick(course.id)}
-					></CourseCard>
-				))
-			)}
+			{coursesList.map((course) => (
+				<CourseCard
+					key={course.id}
+					course={course}
+					buttonEvent={() => toggleButtonClick(course.id)}
+				></CourseCard>
+			))}
 		</ul>
 	);
 };

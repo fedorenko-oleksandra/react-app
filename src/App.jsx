@@ -7,6 +7,7 @@ import {
 	EmptyCourseList,
 	Login,
 	Registration,
+	CourseInfo,
 } from './components';
 import { getCoursesList } from './helpers/index';
 
@@ -28,7 +29,9 @@ function App() {
 				<Header></Header>
 				<div className={styles.app_container}>
 					<Routes>
-						<Route path='courses' element={courseList} />
+						<Route exact path='courses' element={courseList} />
+						<Route path='courses/:id' element={<CourseInfo />} />
+
 						<Route path='login' element={<Login />} />
 						<Route path='registration' element={<Registration />} />
 						<Route path='*' element={<Navigate to='registration' />} />
