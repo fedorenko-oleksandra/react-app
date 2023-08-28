@@ -6,6 +6,10 @@
     border-radius: 5px;
     outline: none;
     padding: 8px;
+
+    &_error {
+        border-color: $danger-color;
+    }
 }
 
 label {

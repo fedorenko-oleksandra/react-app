@@ -1,22 +1,34 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button, Input } from '../../common';
+import { getCourseDuration } from '../../helpers';
+import AuthorItem from './components/AuthorItem/AuthorItem';
+import { mockedAuthorsList } from '../../constants';
 
 import styles from './CreateCourse.module.scss';
 
 const CreateCourse = () => {
 	const title = 'Course Edit/Create page';
+	const minLength = 3;
+	const navigate = useNavigate();
+
 	const [inputs, setInputs] = useState({
 		title: '',
 		description: '',
 		duration: '',
-		author: '',
+		authors: [],
 	});
+	const [author, setAuthor] = useState({
+		id: '',
+		name: '',
+	});
+	const [listAuthors, setListAuthors] = useState(mockedAuthorsList);
 	const [errors, setErrors] = useState({
 		title: '',
 		description: '',
 		duration: '',
+		authors: '',
 		author: '',
 	});
 
@@ -26,10 +38,16 @@ const CreateCourse = () => {
 		setInputs((values) => ({ ...values, [name]: value }));
 	};
 
+	const authorInputChange = (event) => {
+		const value = event.target.value;
+		setAuthor({ id: value, name: value });
+	};
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (handleValidation()) {
-			console.logs(inputs);
+			console.log(inputs);
+			navigate(`/courses`);
 		}
 	};
 
@@ -37,23 +55,69 @@ const CreateCourse = () => {
 		let formIsValid = true;
 		let errors = {};
 
-		if (inputs.title === '') {
+		if (inputs.title === '' || inputs.title.length < minLength) {
 			errors.title = 'Title is required.';
 			formIsValid = false;
 		}
-		if (inputs.description === '') {
+		if (inputs.description === '' || inputs.description.length < minLength) {
 			errors.description = 'Description is required.';
+			formIsValid = false;
+		}
+		if (inputs.duration === '') {
+			errors.duration = 'Duration is required.';
+			formIsValid = false;
+		}
+		if (inputs.authors.length < 1) {
+			errors.authors = 'Authors is required.';
+			formIsValid = false;
+		}
+		if (author.name.length < 2) {
+			errors.author = 'Authors name should be more 2 symbols.';
 			formIsValid = false;
 		}
 		setErrors(errors);
 		return formIsValid;
 	};
 
+	const deleteAuthor = (id) => {
+		const deletedAuthor = inputs.authors.find((author) => author.id === id);
+		setListAuthors([...listAuthors, deletedAuthor]);
+		setInputs({
+			...inputs,
+			authors: inputs.authors.filter((author) => author.id !== id),
+		});
+	};
+
+	const addAuthor = (id) => {
+		const selectedAuthor = listAuthors.find((author) => author.id === id);
+		setListAuthors(listAuthors.filter((author) => author.id !== id));
+		setInputs({ ...inputs, authors: [...inputs.authors, selectedAuthor] });
+	};
+
+	const createAuthor = (id) => {
+		if (author.name.length < minLength) {
+			let errors = {};
+			errors.author = 'Authors name should be more 2 symbols.';
+			setErrors(errors);
+			return;
+		}
+		setErrors(errors);
+		if (!listAuthors.find((author) => author.id === id)) {
+			setListAuthors([...listAuthors, author]);
+			setAuthor({
+				id: '',
+				name: '',
+			});
+		} else {
+			alert(`Author ${author.name} is already added`);
+		}
+	};
+
 	return (
-		<div>
+		<form onSubmit={handleSubmit}>
 			<h1 className={styles.title}>{title}</h1>
 			<div className={styles.card_border}>
-				<form className={styles.creation_form} onSubmit={handleSubmit}>
+				<div className={styles.creation_form}>
 					<h3 className={styles.creation_subtitle}>Main Info</h3>
 					<div className={styles.input_holder}>
 						<Input
@@ -87,74 +151,76 @@ const CreateCourse = () => {
 							<Input
 								labelText='Duration'
 								id='duration'
-								type='text'
+								type='number'
 								name='duration'
-								placeholder='duration'
+								placeholder='Duration'
 								inputValue={inputs.duration}
 								className={styles.input_error}
 								handleChange={inputChange}
 							></Input>
 							<span className={styles.error}>{errors.duration}</span>
 						</div>
-						<strong>lalala</strong>
+						<strong>{getCourseDuration(inputs.duration)}</strong>
 					</div>
-					<div>
-						<div>
+					<div className={styles.authors_holder}>
+						<div className={styles.authors_left}>
 							<h3 className={styles.creation_subtitle}>Authors</h3>
-							<div>
+							<div className={styles.author_add_holder}>
 								<Input
 									labelText='Author name'
 									id='author'
 									type='text'
 									name='author'
-									placeholder='author'
-									inputValue={inputs.author}
+									placeholder='Author'
+									inputValue={author.name}
 									className={styles.input_error}
-									handleChange={inputChange}
+									handleChange={authorInputChange}
 								></Input>
-								<Button buttonText='Create Author'></Button>
+								<Button
+									type='button'
+									buttonText='Create Author'
+									onClick={() => createAuthor(author.id)}
+								></Button>
 							</div>
+							<span className={styles.error}>{errors.author}</span>
 						</div>
-						<div>
+						<div className={styles.author_list}>
 							<h3 className={styles.creation_subtitle}>Course Authors</h3>
+							<span className={styles.error}>{errors.authors}</span>
+							<div>
+								{inputs.authors.map((author) => (
+									<AuthorItem
+										key={author.id}
+										author={author.name}
+										buttonText={'-'}
+										typeButton={'button'}
+										buttonEvent={() => deleteAuthor(author.id)}
+									></AuthorItem>
+								))}
+							</div>
 						</div>
 					</div>
 					<h4 className={styles.creation_subtitle}>Authors List</h4>
-				</form>
-				{/* <div className={styles.course_info}>
-					<p className={styles.content_left}>{course.description}</p>
-
-					<div className={styles.content_right}>
-						<ul className={styles.info_wrapper}>
-							<li>
-								<strong>ID: </strong>
-								<span>{id}</span>
-							</li>
-							<li>
-								<strong>Duration: </strong>
-								{course.duration}
-							</li>
-							<li>
-								<strong>Created: </strong>
-								{course.creationDate}
-							</li>
-							<li className={styles.word_wrap}>
-								<strong>Authors: </strong>
-								<span>{course.authors}</span>
-							</li>
-						</ul>
-					</div>
-				</div> */}
+					<ul className={styles.author_list}>
+						{listAuthors.map((author) => (
+							<AuthorItem
+								key={author.id}
+								author={author.name}
+								buttonText={'+'}
+								typeButton={'button'}
+								buttonEvent={() => addAuthor(author.id)}
+							></AuthorItem>
+						))}
+					</ul>
+				</div>
 			</div>
 			<div className={styles.button_holder}>
 				<Link to='/courses'>
-					<Button buttonText='Cancel'></Button>
+					<Button type='button' buttonText='Cancel'></Button>
 				</Link>
-				<Link to='/courses'>
-					<Button buttonText='Create Course'></Button>
-				</Link>
+				<Button buttonText='Create Course' type='submit'></Button>
 			</div>
-		</div>
+		</form>
 	);
 };
 

@@ -24,12 +24,19 @@ function App() {
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			setIsLogin(true);
+			getCurrentUser();
 			setUserName(localStorage.getItem('name'));
 		} else {
 			setIsLogin(false);
 			setUserName('');
 		}
 	}, [location]);
+
+	const getCurrentUser = async () => {
+		const response = await fetch('http://localhost:4000/users/me');
+		const res = await response.json();
+		console.log(res);
+	};
 
 	let courseList;
 	if (courses.length > 0) {
