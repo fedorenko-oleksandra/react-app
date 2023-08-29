@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Button from '../../common/Button/Button';
+import { Button } from '../../common';
 
 import styles from './EmptyCourseList.module.scss';
 

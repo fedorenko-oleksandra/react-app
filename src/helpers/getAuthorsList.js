@@ -1,4 +1,4 @@
-import { mockedAuthorsList } from '../mockedCoursesList';
+import { mockedAuthorsList } from '../constants';
 
 export const getAuthorsList = (value) => {
 	return value

@@ -1,0 +1,108 @@
+@import '../../variables.scss';
+
+.card_border {
+  border: 2px solid $light-color;
+  padding: 45px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  background-color: $white-color;
+  box-shadow: $shadow;
+}
+
+.course_info {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.creation {
+  &_subtitle {
+    margin-bottom: 25px;
+  }
+
+  &_form {
+    Input,
+    textarea {
+      width: 100%;
+    }
+
+    textarea {
+      border-radius: 5px;
+      padding: 8px;
+      outline: none;
+      border: 1px solid $gray-color;
+    }
+  }
+}
+
+.duration_holder {
+  display: flex;
+  align-items: center;
+
+  strong {
+    margin-left: 20px;
+  }
+}
+
+.authors {
+  &_holder {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+
+  &_left {
+    flex: 1 1 70%;
+  }
+}
+
+.author_add_holder {
+  display: flex;
+  align-items: flex-end;
+
+  Button {
+    margin-left: 10px;
+  }
+}
+
+.author_list {
+  flex: 1 1 30%;
+
+  Button {
+    color: $primary-blue-color;
+    background-color: $white-color;
+    border-color:  $white-color;
+    padding: 2px;
+  }
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: 32px;
+}
+
+.button_holder {
+  display: flex;
+  align-items: baseline;
+  justify-content: end;
+
+  > Button {
+    margin-left: 10px;
+  }
+}
+
+.input {
+  &_holder {
+    margin-bottom: 20px;
+  }
+
+  &_error {
+    border-color: $danger-color;
+  }
+}
+
+.error {
+  color: $danger-color;
+}

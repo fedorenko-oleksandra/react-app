@@ -4,15 +4,18 @@ import styles from './Input.module.scss';
 
 const Input = (props) => {
 	return (
-		<input
-			type='search'
-			name='search-form'
-			id='search-form'
-			className={styles.input}
-			placeholder={props.placeholder}
-			onChange={props.handleChange}
-			value={props.inputValue}
-		/>
+		<div>
+			<label htmlFor={props.name}>{props.labelText}</label>
+			<input
+				type={props.type}
+				name={props.name}
+				id={props.name}
+				className={styles.input}
+				placeholder={props.placeholder}
+				onChange={props.handleChange}
+				value={props.inputValue}
+			/>
+		</div>
 	);
 };
 

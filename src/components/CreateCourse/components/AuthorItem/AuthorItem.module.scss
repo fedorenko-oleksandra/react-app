@@ -1,0 +1,10 @@
+@import '../../../../variables.scss';
+
+.author {
+  display: flex;
+  align-items: center;
+}
+
+.name {
+  flex: 0 0 10em;
+}

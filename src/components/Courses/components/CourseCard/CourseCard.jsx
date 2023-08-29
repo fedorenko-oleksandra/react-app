@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './CourseCard.module.scss';
 
-import Button from '../../../../common/Button/Button';
+import { Button } from '../../../../common';
 
 const CourseCard = (props) => {
 	const { title, description, authors, duration, creationDate } = props.course;

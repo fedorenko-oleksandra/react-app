@@ -1,5 +1,5 @@
 import { getCourseDuration, formatCreationDate, getAuthorsList } from './index';
-import { mockedCoursesList } from './../mockedCoursesList';
+import { mockedCoursesList } from '../constants';
 
 export const getCoursesList = () => {
 	return mockedCoursesList.map((course) => {
