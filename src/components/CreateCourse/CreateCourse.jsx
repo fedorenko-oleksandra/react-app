@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { Button, Input } from '../../common';
 import { getCourseDuration } from '../../helpers';
 import AuthorItem from './components/AuthorItem/AuthorItem';
-import { mockedAuthorsList } from '../../constants';
+import { mockedAuthorsList, mockedCoursesList } from '../../constants';
 
 import styles from './CreateCourse.module.scss';
 
@@ -12,6 +12,7 @@ const CreateCourse = () => {
 	const title = 'Course Edit/Create page';
 	const minLength = 3;
 	const navigate = useNavigate();
+	const id = useId();
 
 	const [inputs, setInputs] = useState({
 		title: '',
@@ -24,6 +25,7 @@ const CreateCourse = () => {
 		name: '',
 	});
 	const [listAuthors, setListAuthors] = useState(mockedAuthorsList);
+	const [selectedAuthors, setSelectedAuthors] = useState([]);
 	const [errors, setErrors] = useState({
 		title: '',
 		description: '',
@@ -46,7 +48,11 @@ const CreateCourse = () => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (handleValidation()) {
-			console.log(inputs);
+			mockedCoursesList.push({
+				...inputs,
+				id,
+				creationDate: new Date().toDateString(),
+			});
 			navigate(`/courses`);
 		}
 	};
@@ -71,10 +77,6 @@ const CreateCourse = () => {
 			errors.authors = 'Authors is required.';
 			formIsValid = false;
 		}
-		if (author.name.length < 2) {
-			errors.author = 'Authors name should be more 2 symbols.';
-			formIsValid = false;
-		}
 		setErrors(errors);
 		return formIsValid;
 	};
@@ -82,16 +84,18 @@ const CreateCourse = () => {
 	const deleteAuthor = (id) => {
 		const deletedAuthor = inputs.authors.find((author) => author.id === id);
 		setListAuthors([...listAuthors, deletedAuthor]);
+		setSelectedAuthors(selectedAuthors.filter((author) => author.id !== id));
 		setInputs({
 			...inputs,
-			authors: inputs.authors.filter((author) => author.id !== id),
+			authors: inputs.authors.filter((authorId) => authorId !== id),
 		});
 	};
 
 	const addAuthor = (id) => {
 		const selectedAuthor = listAuthors.find((author) => author.id === id);
 		setListAuthors(listAuthors.filter((author) => author.id !== id));
-		setInputs({ ...inputs, authors: [...inputs.authors, selectedAuthor] });
+		setSelectedAuthors([...selectedAuthors, selectedAuthor]);
+		setInputs({ ...inputs, authors: [...inputs.authors, selectedAuthor.id] });
 	};
 
 	const createAuthor = (id) => {
@@ -104,6 +108,7 @@ const CreateCourse = () => {
 		setErrors(errors);
 		if (!listAuthors.find((author) => author.id === id)) {
 			setListAuthors([...listAuthors, author]);
+			mockedAuthorsList.push(author);
 			setAuthor({
 				id: '',
 				name: '',
@@ -188,7 +193,7 @@ const CreateCourse = () => {
 							<h3 className={styles.creation_subtitle}>Course Authors</h3>
 							<span className={styles.error}>{errors.authors}</span>
 							<div>
-								{inputs.authors.map((author) => (
+								{selectedAuthors.map((author) => (
 									<AuthorItem
 										key={author.id}
 										author={author.name}

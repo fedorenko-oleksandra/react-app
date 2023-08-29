@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../../helpers/services';
 
 import { Input, Button } from '../../common';
 
@@ -52,20 +53,17 @@ const Login = () => {
 	};
 
 	const uploadMultiple = async (formValues) => {
-		const response = await fetch('http://localhost:4000/login', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(formValues),
-		});
-		const res = await response.json();
+		const response = await API.post('/login', JSON.stringify(formValues));
 
-		if (res.successful === true) {
-			localStorage.setItem('token', res.result);
-			localStorage.setItem('name', res.user.name);
+		const { data } = response;
+
+		if (data.successful === true) {
+			localStorage.setItem('token', data.result);
+			localStorage.setItem('name', data.user.name);
 			navigate('/courses');
 		} else {
 			let errors = {};
-			res.errors.forEach((error) => {
+			data.errors.forEach((error) => {
 				if (error.includes('email')) {
 					errors.email = error;
 				}

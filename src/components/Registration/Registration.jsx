@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import API from '../../helpers/services';
 
 import { Input, Button } from '../../common';
 
@@ -53,18 +54,15 @@ const Registration = (props) => {
 	};
 
 	const uploadMultiple = async (formValues) => {
-		const response = await fetch('http://localhost:4000/register', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(formValues),
-		});
-		const result = await response.json();
+		const response = await API.post('/login', JSON.stringify(formValues));
 
-		if (result.successful === true) {
+		const { data } = response;
+
+		if (data.successful === true) {
 			navigate('/login');
 		} else {
 			let errors = {};
-			result.errors.forEach((error) => {
+			data.errors.forEach((error) => {
 				if (error.includes('name')) {
 					errors.name = error;
 				}
