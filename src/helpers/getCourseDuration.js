@@ -1,4 +1,7 @@
 export const getCourseDuration = (duration) => {
+	if (!duration) {
+		return;
+	}
 	if (duration < 60) {
 		return `${duration}min`;
 	} else if (duration % 60 === 0) {
