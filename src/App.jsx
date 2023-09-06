@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
 	Header,
@@ -11,12 +12,25 @@ import {
 	CreateCourse,
 } from './components';
 import { getCoursesList } from './helpers/index';
+import { getCourses } from './services';
 
 import styles from './App.module.scss';
 
 function App() {
-	const courses = getCoursesList();
+	// let courses;
+	// API.get('/courses/all').then((res) => {
+	// 	console.log(res);
+	// 	courses = res.data.result;
+	// 	console.log(courses);
+	// });
+	// return courses;
+	let courses = [];
+	getCourses().then((res) => {
+		courses = getCoursesList(res.data.result);
+		console.log(courses);
+	});
 	const location = useLocation();
+	const dispatch = useDispatch();
 
 	const [isLogin, setIsLogin] = useState(false);
 	const [userName, setUserName] = useState('');

@@ -1,7 +1,9 @@
 import { mockedAuthorsList } from '../constants';
 
 export const getAuthorsList = (value) => {
-	return value
-		.map((author) => mockedAuthorsList.find((item) => item.id === author).name)
-		.join(', ');
+	if (typeof value === 'string') {
+		return mockedAuthorsList.find((item) => item.id === value).name;
+	} else {
+		return mockedAuthorsList.find((item) => item.id === value).name;
+	}
 };

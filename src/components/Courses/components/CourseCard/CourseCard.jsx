@@ -15,8 +15,8 @@ const CourseCard = (props) => {
 				<div className={styles.content_right}>
 					<ul className={styles.info_wrapper}>
 						<li className={styles.word_wrap}>
-							<strong>Authors: </strong>
-							<span>{authors}</span>
+							{/* <strong>Authors: </strong>
+							<span>{authors}</span> */}
 						</li>
 						<li>
 							<strong>Duration: </strong>
